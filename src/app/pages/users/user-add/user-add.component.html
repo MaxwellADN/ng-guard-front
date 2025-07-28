@@ -1,0 +1,48 @@
+<div class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-30">
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+    <h2 class="text-xl font-semibold mb-4">Add User</h2>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label class="block mb-1 font-medium">Full Name</label>
+        <input type="text" formControlName="fullname" class="w-full border rounded px-3 py-2" />
+        @if (form.get('fullname')?.invalid && form.get('fullname')?.touched) {
+          <div class="text-red-500 text-xs">Full name is required</div>
+        }
+      </div>
+      <div class="mb-3">
+        <label class="block mb-1 font-medium">Email</label>
+        <input type="email" formControlName="email" class="w-full border rounded px-3 py-2" />
+        @if (form.get('email')?.invalid && form.get('email')?.touched) {
+          <div class="text-red-500 text-xs">Valid email is required</div>
+        }
+      </div>
+      <div class="mb-3">
+        <label class="block mb-1 font-medium">Password</label>
+        <input type="password" formControlName="password" class="w-full border rounded px-3 py-2" />
+        @if (form.get('password')?.invalid && form.get('password')?.touched) {
+          <div class="text-red-500 text-xs">Password is required</div>
+        }
+      </div>
+      <div class="mb-3">
+        <label class="block mb-1 font-medium">Biography</label>
+        <textarea formControlName="biography" class="w-full border rounded px-3 py-2"></textarea>
+      </div>
+      <div class="mb-3">
+        <label class="block mb-1 font-medium">Position</label>
+        <input type="text" formControlName="position" class="w-full border rounded px-3 py-2" />
+      </div>
+      <div class="mb-3">
+        <label class="block mb-1 font-medium">Country</label>
+        <input type="text" formControlName="country" class="w-full border rounded px-3 py-2" />
+      </div>
+      <div class="mb-3 flex items-center">
+        <input type="checkbox" formControlName="agreeWithTerms" class="mr-2" />
+        <label>I agree with the terms</label>
+      </div>
+      <div class="flex justify-end space-x-2">
+        <button type="button" (click)="onCancel()" class="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300">Cancel</button>
+        <button type="submit" [disabled]="form.invalid" class="px-4 py-2 rounded bg-primary-700 text-white hover:bg-primary-800">Add</button>
+      </div>
+    </form>
+  </div>
+</div>

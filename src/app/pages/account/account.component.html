@@ -1,0 +1,274 @@
+<div class="grid grid-cols-1 px-4 pt-6 xl:grid-cols-3 xl:gap-4">
+    <div class="mb-4 col-span-full xl:mb-2">
+        <tb-breadcrumb [links]="breadCrumbLinks"></tb-breadcrumb>
+        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">{{'ACCOUNT.TITLE' | translate }}
+        </h1>
+    </div>
+    <div class="col-span-full xl:col-auto">
+        <div
+            class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+            <h3 class="mb-4 text-xl font-semibold dark:text-white">{{'ACCOUNT.LANGUAGE' | translate }}</h3>
+            <form [formGroup]="languageForm" (ngSubmit)="onLanguageSave()">
+                <div class="mb-4">
+                    <label for="settings-language"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{'ACCOUNT.SELECT_LANGUAGE'
+                        |
+                        translate }}
+                        <span class="text-white">*</span>
+                    </label>
+                    <select id="settings-language" name="language" formControlName="language"
+                        class="bg-gray-50 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        @for(lang of languageOptions; track lang.code) {
+                            <option [value]="lang.code">
+                                {{ lang.label }}
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div>
+                    <tb-button type="submit" size="small">{{ 'ACCOUNT.SAVE' | translate }}</tb-button>
+                </div>
+            </form>
+        </div>
+        <div
+            class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+            <div class="flow-root">
+                <div class="col-span-2">
+                    @if (activeSubscription$ | async; as subscription) {
+                    <div class="col-span-full xl:col-auto">
+                        <div
+                            class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                            <h3 class="mb-4 text-xl font-semibold dark:text-white">{{ 'ACCOUNT.SUBSCRIPTION_DETAILS' | translate }}</h3>
+                            <div class="flex items-center mb-4">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">
+                                    @if (subscription.stripeSubscriptionId) {
+                                        {{'ACCOUNT.PAID_VIA_STRIPE' | translate }}
+                                    }
+                                    @else {
+                                        {{'ACCOUNT.PAID_VIA_PAYPAL' | translate }}
+                                    }
+                                </span>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">{{ 'ACCOUNT.PERIODICITY' |
+                                    translate }}:</span>
+                                <span
+                                    class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{subscription.price.recurring.interval}}</span>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">{{ 'ACCOUNT.PRICE' | translate
+                                    }}:</span>
+                                <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">
+                                    {{subscription.price.price | currency: subscription.price.currency}}
+                                </span>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">{{ 'ACCOUNT.NEXT_BILLING_DATE' |
+                                    translate }}:</span>
+                                <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{
+                                    getSubscriptionEndPeriodDate(subscription.createdAt) | date: 'MM/dd/yyyy' }}</span>
+                            </div>
+                            <div>
+                                <tb-confirmation-button buttonText="Cancel Subscription"
+                                    buttonColorClass="bg-red-500 hover:bg-red-600"
+                                    confirmText="Are you sure you want to cancel your subscription?"
+                                    confirmButtonText="Yes, cancel it" cancelButtonText="No, keep it"
+                                    (onConfirm)="cancelSubscription()">
+                                </tb-confirmation-button>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                    @else
+                    {
+                        <div class="col-span-full xl:col-auto">
+                            <div
+                                class="p-4 bg-white rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+                                <h3 class="mb-4 text-xl font-semibold dark:text-white">{{ 'ACCOUNT.NO_ACTIVE_SUBSCRIPTION' |
+                                    translate }}</h3>
+                                <p class="text-sm text-gray-700 dark:text-gray-300">{{ 'ACCOUNT.NO_ACTIVE_SUBSCRIPTION_DESCRIPTION'
+                                    | translate }}.</p>
+                                <a routerLink="/app/pricing"
+                                    class="mt-4 flex items-center justify-center w-full px-5 py-3 text-base font-medium text-center text-white bg-gray-700 border border-gray-700 rounded-lg hover:bg-gray-800 focus:ring-4 focus:ring-gray-600 dark:focus:ring-gray-900 cursor-pointer">
+                                    {{"ACCOUNT.VIEWS_PRICING" | translate }}
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-span-2">
+        <div
+            class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+            <h3 class="mb-4 text-xl font-semibold dark:text-white">{{ 'ACCOUNT.GENERAL_INFO' | translate}}</h3>
+            <form [formGroup]="userProfileForm" (ngSubmit)="onUserSave()">
+                <div class="grid grid-cols-6 gap-6">
+                    <div class="col-span-6 sm:col-span-3">
+                        <label for="fullname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            {{ 'ACCOUNT.FULLNAME' | translate }} <span class="text-white">*</span>
+                        </label>
+                        <input type="text" id="fullname" formControlName="fullname"
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="John Doe" required>
+                        <div *ngIf="userProfileForm.get('fullname')?.invalid && userProfileForm.get('fullname')?.touched"
+                            class="text-red-500 text-sm">
+                            {{ 'ACCOUNT.FULLNAME_REQUIRED' | translate }}.
+                        </div>
+                    </div>
+                    <div class="col-span-6 sm:col-span-3">
+                        <label for="addressLine1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            {{ 'ACCOUNT.ADDRESS_LINE_1' | translate }} <span class="text-white">*</span>
+                        </label>
+                        <input type="text" id="addressLine1" formControlName="addressLine1"
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="123 Main St" required>
+                        <div *ngIf="userProfileForm.get('addressLine1')?.invalid && userProfileForm.get('addressLine1')?.touched"
+                            class="text-red-500 text-sm">
+                            {{ 'ACCOUNT.ADDRESS_LINE_1_REQUIRED' | translate }}
+                        </div>
+                    </div>
+                    <div class="col-span-6 sm:col-span-3">
+                        <label for="addressLine1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            {{ 'ACCOUNT.ADDRESS_LINE_2' | translate }}
+                        </label>
+                        <input type="text" id="addressLine2" formControlName="addressLine2"
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="123 Main St">
+                    </div>
+                    <div class="col-span-6 sm:col-span-3">
+                        <label for="zipCode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            {{ 'ACCOUNT.ZIP' | translate }}
+                            <span class="text-white">*</span>
+                        </label>
+                        <input type="text" id="zipCode" formControlName="zipCode"
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="12345" required>
+                        <div *ngIf="userProfileForm.get('zipCode')?.invalid && userProfileForm.get('zipCode')?.touched"
+                            class="text-red-500 text-sm">
+                            {{ 'ACCOUNT.ZIP_REQUIRED' | translate }}
+                        </div>
+                    </div>
+                    <div class="col-span-6 sm:col-span-3">
+                        <label for="city" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            {{ 'ACCOUNT.CITY' | translate }}
+                            <span class="text-white">*</span>
+                        </label>
+                        <input type="text" id="city" formControlName="city"
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="New York" required>
+                        <div *ngIf="userProfileForm.get('city')?.invalid && userProfileForm.get('city')?.touched"
+                            class="text-red-500 text-sm">
+                            {{ 'ACCOUNT.CITY_REQUIRED' | translate }}
+                        </div>
+                    </div>
+                    <div class="col-span-6 sm:col-span-3">
+                        <label for="department" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            {{ 'ACCOUNT.STATE' | translate }}
+                        </label>
+                        <input type="text" id="department" formControlName="department"
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="{{ 'ACCOUNT.STATE' | translate }}">
+                    </div>
+                    <div class="col-span-6 sm:col-span-3">
+                        <label for="country" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            {{ 'ACCOUNT.COUNTRY' | translate }} <span class="text-white">*</span>
+                        </label>
+                        <input type="text" id="country" formControlName="country"
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="USA" required>
+                        <div *ngIf="userProfileForm.get('country')?.invalid && userProfileForm.get('country')?.touched"
+                            class="text-red-500 text-sm">
+                            {{ 'ACCOUNT.COUNTRY_REQUIRED' | translate }}
+                        </div>
+                    </div>
+                    <div class="col-span-6 sm:col-span-3">
+                        <label for="phoneNumber" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            {{ 'ACCOUNT.PHONE' | translate }}
+                        </label>
+                        <input type="text" id="phoneNumber" formControlName="phoneNumber"
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="(123) 456-7890">
+                    </div>
+                    <div class="col-span-6 sm:col-full">
+                        <tb-button type="submit">{{ 'ACCOUNT.SAVE' | translate }}</tb-button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div
+            class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+            <h3 class="mb-4 text-xl font-semibold dark:text-white">{{ 'ACCOUNT.EMAIL_UPDATE' | translate }}</h3>
+            <form [formGroup]="emailForm" (ngSubmit)="onEmailSave()">
+                <div class="grid grid-cols-6 gap-6">
+                    <div class="col-span-full">
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            {{ 'ACCOUNT.NEW_EMAIL' | translate }} <span class="text-white">*</span>
+                        </label>
+                        <input type="email" id="email" formControlName="email"
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="john.doe@mail.com" required>
+                        <div *ngIf="emailForm.get('email')?.invalid && emailForm.get('email')?.touched"
+                            class="text-red-500 text-sm">
+                            {{ 'ACCOUNT.EMAIL_REQUIRED' | translate }}
+                        </div>
+                    </div>
+                    <div class="col-span-full">
+                        <label for="confirm-email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            {{ 'ACCOUNT.CONFIRM_EMAIL' | translate }} <span class="text-white">*</span>
+                        </label>
+                        <input type="email" id="confirm-email" formControlName="confirmEmail"
+                            autocomplete="off" onpaste="return false;" oncopy="return false;"
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="john.doe@mail.com" required>
+                        <div *ngIf="emailForm.get('confirmEmail')?.invalid && emailForm.get('confirmEmail')?.touched"
+                            class="text-red-500 text-sm">
+                            {{ 'ACCOUNT.CONFIRM_EMAIL_REQUIRED' | translate }}
+                        </div>
+                        <div *ngIf="emailForm.hasError('emailsDoNotMatch') && emailForm.get('confirmEmail')?.touched"
+                            class="text-red-500 text-sm">
+                            {{ 'ACCOUNT.EMAILS_DO_NOT_MATCH' | translate }}
+                        </div>
+                    </div>
+                    <div class="col-span-6 sm:col-full">
+                        <tb-button type="submit">{{ 'ACCOUNT.SAVE' | translate }}</tb-button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div
+            class="p-4 mb-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+            <h3 class="mb-4 text-xl font-semibold dark:text-white">{{'ACCOUNT.PASSWORD_INFO' | translate }}</h3>
+            <form action="#" [formGroup]="passwordForm" (ngSubmit)="onPasswordSave()">
+            <div class="grid grid-cols-6 gap-6">
+                <div class="col-span-full">
+                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    {{'ACCOUNT.PASSWORD' | translate }}
+                </label>
+                <input data-popover-target="popover-password" 
+                    data-popover-placement="bottom" 
+                    formControlName="newPassword" 
+                    name="newPassword"
+                    type="password"
+                    id="password"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="{{ 'ACCOUNT.NEW_PASSWORD' | translate }}" required>
+                </div>
+                <div class="col-span-full">
+                <label for="confirm-password"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    {{'ACCOUNT.CONFIRM_PASSWORD' | translate }}
+                </label>
+                <input type="password" name="confirm-password" id="confirm-password" formControlName="confirmPassword"
+                    class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    placeholder="{{ 'ACCOUNT.CONFIRM_PASSWORD' | translate }}" required>
+                </div>
+                <div class="col-span-6 sm:col-full">
+                <tb-button type="submit">{{ 'ACCOUNT.SAVE' | translate }}</tb-button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

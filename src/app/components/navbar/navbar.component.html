@@ -1,0 +1,77 @@
+<header>
+    <nav class="fixed z-30 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 py-3 px-4">
+        <div class="flex justify-between items-center max-w-screen-2xl mx-auto">
+            <div class="flex justify-start items-center">
+                <a href="#" class="flex mr-14">
+                    <span class="self-center hidden sm:flex text-2xl font-semibold whitespace-nowrap dark:text-white">{{ 'NAVBAR.BRAND_NAME' | translate }}</span>
+                </a>
+                <!-- Desktop menu -->
+                <div class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1">
+                    <ul class="flex flex-col mt-4 space-x-6 text-sm font-medium lg:flex-row xl:space-x-8 lg:mt-0">
+                        <li>
+                            <a routerLink="/app/home" class="block text-gray-700 hover:text-primary-700 dark:text-gray-400 dark:hover:text-white">{{ 'NAVBAR.HOME' | translate }}</a>
+                        </li>
+                        <li>
+                            <a routerLink="/app/users" class="block text-gray-700 hover:text-primary-700 dark:text-gray-400 dark:hover:text-white">{{ 'NAVBAR.USERS' | translate }}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="flex justify-between items-center lg:order-2">
+                <button type="button" (click)="toggleTheme()" class="p-2 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
+                    <span class="sr-only">Toggle dark mode</span>
+                    @if(isDarkMode){
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" d="M13 3a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0V3ZM6.343 4.929A1 1 0 0 0 4.93 6.343l1.414 1.414a1 1 0 0 0 1.414-1.414L6.343 4.929Zm12.728 1.414a1 1 0 0 0-1.414-1.414l-1.414 1.414a1 1 0 0 0 1.414 1.414l1.414-1.414ZM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm-9 4a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2H3Zm16 0a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2h-2ZM7.757 17.657a1 1 0 1 0-1.414-1.414l-1.414 1.414a1 1 0 1 0 1.414 1.414l1.414-1.414Zm9.9-1.414a1 1 0 0 0-1.414 1.414l1.414 1.414a1 1 0 0 0 1.414-1.414l-1.414-1.414ZM13 19a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0v-2Z" clip-rule="evenodd"/>
+                        </svg>
+                    } 
+                    @else {
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" d="M11.675 2.015a.998.998 0 0 0-.403.011C6.09 2.4 2 6.722 2 12c0 5.523 4.477 10 10 10 4.356 0 8.058-2.784 9.43-6.667a1 1 0 0 0-1.02-1.33c-.08.006-.105.005-.127.005h-.001l-.028-.002A5.227 5.227 0 0 0 20 14a8 8 0 0 1-8-8c0-.952.121-1.752.404-2.558a.996.996 0 0 0 .096-.428V3a1 1 0 0 0-.825-.985Z" clip-rule="evenodd"/>
+                        </svg>
+                    }
+                </button>
+                <button type="button" class="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 flex-shrink-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 cursor-pointer" id="userMenuDropdownButton" aria-expanded="false" data-dropdown-toggle="userMenuDropdown">
+                    <span class="sr-only">Open user menu</span>
+                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-white font-semibold bg-gray-900 border-2 border-gray-700" >
+                        {{ userInitials }}
+                    </div>
+                </button>
+                <!-- Dropdown menu -->
+                <div class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" id="userMenuDropdown">
+                    <div class="py-3 px-4">
+                        <span class="block text-sm font-semibold text-gray-900 dark:text-white">{{user?.fullname}}</span>
+                        <span class="block text-sm font-light text-gray-500 truncate dark:text-gray-400">{{user?.email}}</span>
+                    </div>
+                    <ul class="py-1 font-light text-gray-500 dark:text-gray-400" aria-labelledby="userMenuDropdownButton">
+                        <li>
+                            <a [routerLink]="['/app/user', user?.id, 'account']" class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white">{{ 'NAVBAR.ACCOUNT_SETTINGS' | translate }}</a>
+                        </li>
+                    </ul>
+                    <ul class="py-1 font-light text-gray-500 dark:text-gray-400" aria-labelledby="userMenuDropdownButton">
+                        <li>
+                            <a [routerLink]="['/app/pricing']" class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white">{{ 'NAVBAR.PRICING' | translate }}</a>
+                        </li>
+                    </ul>
+                    <ul class="py-1 font-light text-gray-500 dark:text-gray-400" aria-labelledby="userMenuDropdownButton">
+                        <li>
+                            <a (click)="logout()" class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer">{{ 'NAVBAR.SIGN_OUT' | translate }}</a>
+                        </li>
+                    </ul>
+                </div>
+  
+                <button type="button" id="toggleMobileMenuButton" data-collapse-toggle="toggleMobileMenu" class="items-center p-2 text-gray-500 rounded-lg md:ml-2 lg:hidden hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
+                    <span class="sr-only">Open menu</span>
+                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+    <nav class="bg-white">
+        <ul id="toggleMobileMenu" class="hidden flex-col mt-0 pt-16 w-full text-sm font-medium lg:hidden">
+            <li class="block border-b dark:border-gray-700">
+                <a href="#" class="block py-3 px-4 text-gray-900 lg:py-0 dark:text-white lg:hover:underline lg:px-0" aria-current="page">{{ 'NAVBAR.HOME' | translate }}</a>
+            </li>
+        </ul>
+    </nav>
+  </header>

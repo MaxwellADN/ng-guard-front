@@ -1,0 +1,96 @@
+<div
+  *ngIf="isVisible"
+  class="fixed top-5 right-5 flex items-center p-4 max-w-xs text-white rounded-lg shadow-lg"
+  [ngClass]="{
+    'bg-green-500': type === 'success',
+    'bg-red-500': type === 'error',
+    'bg-blue-500': type === 'info',
+    'bg-yellow-500': type === 'warning'
+  }"
+>
+  <div class="flex-shrink-0">
+    <svg
+      *ngIf="type === 'success'"
+      class="w-6 h-6"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M5 13l4 4L19 7"
+      ></path>
+    </svg>
+    <svg
+      *ngIf="type === 'error'"
+      class="w-6 h-6"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M6 18L18 6M6 6l12 12"
+      ></path>
+    </svg>
+    <svg
+      *ngIf="type === 'info'"
+      class="w-6 h-6"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M13 16h-1v-4h-1m1-4h.01M12 20h.01"
+      ></path>
+    </svg>
+    <svg
+      *ngIf="type === 'warning'"
+      class="w-6 h-6"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4m0 4h.01"
+      ></path>
+    </svg>
+  </div>
+  <div class="ml-3 text-sm font-medium">{{ message }}</div>
+  <button
+    type="button"
+    class="ml-auto -mx-1.5 -my-1.5 bg-transparent text-white rounded-lg focus:ring-2 focus:ring-white p-1.5 hover:bg-opacity-20"
+    aria-label="Close"
+    (click)="closeToast()"
+  >
+    <span class="sr-only">Close</span>
+    <svg
+      class="w-5 h-5"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M6 18L18 6M6 6l12 12"
+      ></path>
+    </svg>
+  </button>
+</div>

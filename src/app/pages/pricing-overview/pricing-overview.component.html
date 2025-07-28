@@ -1,0 +1,108 @@
+@if (isLoading && (isPriceLoading$ | async)) {
+<tb-spinner></tb-spinner>
+} @else {
+<div class="container px-4 pb-24 mx-auto pt-12 lg:px-0">
+    <div>
+        <tb-breadcrumb [links]="breadCrumbLinks"></tb-breadcrumb>
+    </div>
+    <h1 class="mb-3 text-3xl font-bold text-gray-900 sm:text-4xl sm:leading-none sm:tracking-tight dark:text-white">
+        {{ 'PRICING_OVERVIEW.TITLE' | translate }}
+    </h1>
+    <p class="mb-6 text-lg font-normal text-gray-500 sm:text-xl dark:text-gray-400">
+        <span [innerHTML]="'PRICING_OVERVIEW.DESCRIPTION' | translate"></span>
+    </p>
+    <!-- Pricing Details -->
+    @if (pricing$ | async; as pricing) {
+        <div
+            class="max-w-3xl p-6 text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-white">
+            <h2 class="mb-4 text-2xl font-semibold">{{ pricing.title }}</h2>
+            <div class="flex items-baseline mb-8">
+                <span class="mr-2 text-5xl font-extrabold">{{ pricing.price | currency: pricing.currency }}</span>
+                <span class="text-gray-500 dark:text-gray-400">/{{ pricing.recurring.interval }}</span>
+            </div>
+
+            <!-- Features -->
+            <ul role="list" class="mb-8 space-y-4 text-left">
+                <li class="flex items-center space-x-3">
+                    <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span>Individual configuration</span>
+                </li>
+                <li class="flex items-center space-x-3">
+                    <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span>Individual configuration</span>
+                </li>
+                <li class="flex items-center space-x-3">
+                    <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span>Individual configuration</span>
+                </li>
+                <li class="flex items-center space-x-3">
+                    <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span>Individual configuration</span>
+                </li>
+                <li class="flex items-center space-x-3">
+                    <svg class="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" fill="currentColor"
+                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span>Individual configuration</span>
+                </li>
+            </ul>
+            <div class="flex flex-col space-y-4">
+                @if (activeSubscription$ | async; as activeSubscription) {
+                    @if (activeSubscription.stripeSubscriptionId && pricing.stripePriceId) {
+                        <tb-button [loading]="isStripeSubscribing"
+                            buttonClass="cursor-pointer w-full px-5 py-3 text-base font-medium text-center text-white bg-blue-600 border border-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800"
+                            (click)="subscribeWithStripe(pricing.stripePriceId!)">
+                            {{ 'PRICING_OVERVIEW.SUBSCRIBE_STRIPE' | translate }}
+                        </tb-button>
+                    }
+                    @if (activeSubscription.paypalAgreementId && pricing.paypalPriceId) {
+                        <tb-button
+                            [loading]="isPayPalSubscribing"
+                            (click)="updatePayPalSubscription(pricing.paypalPriceId!)"
+                            buttonClass="cursor-pointer w-full px-5 py-3 text-base font-medium text-center text-blue-900 bg-yellow-400 border border-yellow-400 rounded-lg hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 dark:focus:ring-yellow-600">
+                            {{ 'PRICING_OVERVIEW.SUBSCRIBE_PAYPAL' | translate }}
+                        </tb-button>
+                    }
+                } 
+                @else {
+                    @if (pricing.stripePriceId) {
+                        <tb-button [loading]="isStripeSubscribing"
+                            buttonClass="cursor-pointer w-full px-5 py-3 text-base font-medium text-center text-white bg-blue-600 border border-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800"
+                            (click)="subscribeWithStripe(pricing.stripePriceId!)">
+                            {{ 'PRICING_OVERVIEW.SUBSCRIBE_STRIPE' | translate }}
+                        </tb-button>
+                    }
+                    @if (pricing.paypalPriceId) {
+                        <div class="p-1 bd-highlight">
+                            <div id="paypal-btn" #paypal></div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    }
+</div>
+}

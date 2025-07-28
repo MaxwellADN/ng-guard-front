@@ -1,0 +1,50 @@
+<form [formGroup]="pricingForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <div>
+        <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            {{ 'PRICING_CREATE.TITLE' | translate }}
+        </label>
+        <input 
+            id="title" 
+            type="text" 
+            formControlName="title" 
+            placeholder="{{ 'PRICING_CREATE.TITLE_PLACEHOLDER' | translate }}"
+            class="block w-full px-3 py-2 mt-1 text-sm border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+    </div>
+    <div>
+        <label for="price" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Price</label>
+        <input 
+            id="price" 
+            type="number" 
+            formControlName="price" 
+            class="block w-full px-3 py-2 mt-1 text-sm border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+    </div>
+    <div>
+        <label for="currency" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Currency</label>
+        <select 
+            id="currency" 
+            formControlName="currency" 
+            class="block w-full px-3 py-2 mt-1 text-sm border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+            @for(item of currencies; track item.code)
+            {
+                <option [value]="item.code">{{ item.label }} ({{item.code}})</option>
+            }
+        </select>
+    </div>
+    <div formGroupName="recurring">
+        <label for="interval" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Interval</label>
+        <select 
+            id="interval" 
+            formControlName="interval" 
+            class="block w-full px-3 py-2 mt-1 text-sm border rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+            <option value="month">
+                {{ 'PRICING.MONTHLY' | translate }}
+            </option>
+            <option value="year">
+                {{ 'PRICING.YEARLY' | translate }}
+            </option>
+        </select>
+    </div>
+    <tb-button size="small" type="submit">
+        {{ 'PRICING_CREATE.CREATE_PLAN_BUTTON' | translate }}
+    </tb-button>
+</form>
