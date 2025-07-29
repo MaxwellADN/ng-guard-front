@@ -16,6 +16,7 @@ export class ButtonComponent {
   @Input() spinnerSize: string = 'w-4 h-4';
   @Input() type: string = 'button'; 
   @Input() size: 'small' | 'medium' | 'large' = 'small';
+  @Input() disabled: boolean = false;
 
   get sizeClass(): string {
     switch (this.size) {

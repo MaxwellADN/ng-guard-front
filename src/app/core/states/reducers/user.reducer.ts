@@ -1,13 +1,15 @@
 import { createReducer, on } from '@ngrx/store';
 import * as UserActions from '../actions/user.action';
 import { IUser } from '../../../shared/models/user.interface';
+import { IPagination } from '../../../shared/models/pagination.interface';
 
 export interface UserState {
   user: IUser | null;
   loading: boolean;
   error: any;
-  users?: IUser[]; 
-  usersTotal?: number; 
+  users?: IUser[];
+  usersTotal?: number;
+  pagination?: IPagination | null;
 }
 
 export const initialState: UserState = {
@@ -16,6 +18,7 @@ export const initialState: UserState = {
   error: null,
   users: [],
   usersTotal: 0,
+  pagination: null,
 };
 
 export const userReducer = createReducer(
@@ -89,21 +92,42 @@ export const userReducer = createReducer(
     error,
   })),
 
-  // Paginated users
-  on(UserActions.getUsersPaginated, (state) => ({
+  // Handle deleteUser action
+  on(UserActions.deleteUser, (state) => ({
     ...state,
     loading: true,
     error: null,
   })),
-  on(UserActions.getUsersPaginatedSuccess, (state, { results, records }) => ({
+  on(UserActions.deleteUserSuccess, (state, { userId }) => ({
+    ...state,
+    users: state.users?.filter(u => u.id !== userId),
+    usersTotal: (state.usersTotal ?? 0) - 1,
+    loading: false,
+  })),
+  on(UserActions.deleteUserFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
+
+  // Paginated users
+  on(UserActions.getUsersPaginated, (state, { pagination }) => ({
+    ...state,
+    loading: true,
+    error: null,
+    pagination,
+  })),
+  on(UserActions.getUsersPaginatedSuccess, (state, { results, records, pagination }) => ({
     ...state,
     users: results,
     usersTotal: records,
     loading: false,
+    pagination,
   })),
-  on(UserActions.getUsersPaginatedFailure, (state, { error }) => ({
+  on(UserActions.getUsersPaginatedFailure, (state, { error, pagination }) => ({
     ...state,
     loading: false,
     error,
+    pagination,
   }))
 );

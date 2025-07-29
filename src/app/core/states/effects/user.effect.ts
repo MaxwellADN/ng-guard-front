@@ -61,19 +61,35 @@ export class UserEffects {
     )
   );
 
+  // Effect to handle deleting a user
+  deleteUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserActions.deleteUser),
+      mergeMap((action) =>
+        this.userService.delete(action.userId).pipe(
+          map(() => UserActions.deleteUserSuccess({ userId: action.userId })),
+          catchError((error) => of(UserActions.deleteUserFailure({ error })))
+        )
+      )
+    )
+  );
+
   // Effect to handle paginated users
   getUsersPaginated$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserActions.getUsersPaginated),
       mergeMap((action) =>
-        this.userService.getPaginated(action.pagination).pipe(
+        this.userService.searchAll(action.pagination).pipe(
           map((response) =>
             UserActions.getUsersPaginatedSuccess({
               results: response.results,
               records: response.records,
+              pagination: action.pagination
             })
           ),
-          catchError((error) => of(UserActions.getUsersPaginatedFailure({ error })))
+          catchError((error) =>
+            of(UserActions.getUsersPaginatedFailure({ error, pagination: action.pagination }))
+          )
         )
       )
     )

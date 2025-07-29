@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { IUser } from '../../../shared/models/user.interface';
+import { IPagination } from '../../../shared/models/pagination.interface';
 
 // Action to get a user by ID
 export const getUser = createAction(
@@ -63,18 +64,34 @@ export const updateUserEmailFailure = createAction(
   props<{ error: any }>()
 );
 
+// Action to delete a user
+export const deleteUser = createAction(
+  '[User] Delete User',
+  props<{ userId: string }>()
+);
+
+export const deleteUserSuccess = createAction(
+  '[User] Delete User Success',
+  props<{ userId: string }>()
+);
+
+export const deleteUserFailure = createAction(
+  '[User] Delete User Failure',
+  props<{ error: any }>()
+);
+
 // Paginated users
 export const getUsersPaginated = createAction(
   '[User] Get Users Paginated',
-  props<{ pagination: any }>() // Replace 'any' with your IPagination interface if available
+  props<{ pagination: IPagination }>()
 );
 
 export const getUsersPaginatedSuccess = createAction(
   '[User] Get Users Paginated Success',
-  props<{ results: IUser[]; records: number }>()
+  props<{ results: IUser[]; records: number; pagination: IPagination }>()
 );
 
 export const getUsersPaginatedFailure = createAction(
   '[User] Get Users Paginated Failure',
-  props<{ error: any }>()
+  props<{ error: any; pagination: IPagination }>()
 );

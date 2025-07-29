@@ -6,7 +6,7 @@ import { AuthService } from '../../shared/services/auth.service';
 import { RouterModule } from '@angular/router';
 import { IUser } from '../../shared/models/user.interface';
 import { TranslateModule } from '@ngx-translate/core';
-import { Store } from '@ngrx/store';
+import { StringUtils } from '../../core/utils/string.utils';
 
 @Component({
   selector: 'fb-navbar',
@@ -23,7 +23,7 @@ export class NavbarComponent implements OnInit {
   private readonly flowbiteService = inject(FlowbiteService);
   private readonly authService = inject(AuthService);
   public user: IUser | null = null;
-  public userInitials: string = '';
+  public userInitials: string | null = null;
   public userAvatarColor: string = '';
   public isDarkMode: boolean = localStorage.getItem('theme') === 'dark';
 
@@ -33,14 +33,7 @@ export class NavbarComponent implements OnInit {
       initFlowbite();
     });
     this.user = this.authService.getUserFromLocalStorage();
-    this.setUserInitials();
-  }
-
-  private setUserInitials(): void {
-    if (this.user?.fullname) {
-      const names = this.user.fullname.split(' ').slice(0, 2);
-      this.userInitials = names.map(name => name[0]).join('').toUpperCase();
-    }
+    this.userInitials = StringUtils.setUserInitials(this.user?.fullname!);
   }
 
   public logout(): void {

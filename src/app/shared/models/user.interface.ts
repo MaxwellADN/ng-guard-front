@@ -1,4 +1,5 @@
 import { IAddress } from "./address.interface";
+import { ISubscription } from "./subscription.interface";
 
 export interface IUser {
     id: string | null;
@@ -12,9 +13,9 @@ export interface IUser {
     rememberMe: boolean | null;
     role: number | null;
     language: string;
-    addresses?: IAddress[];
+    biography?: string | null;
+    position?: string | null;
+    addresses?: IAddress[] | null;
+    subscription?: ISubscription;
     createdBy: IUser | null;
-    biography?: string;
-    position?: string;
-    country?: string;
 }

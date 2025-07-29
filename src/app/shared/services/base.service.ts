@@ -37,16 +37,39 @@ export abstract class BaseService<T> {
    * @returns An Observable of type IDatatableResponse<T> is being returned.
    */
   public search(pagination: IPagination): Observable<IDatatableResponse<T>> {
-    return this.http.get<IDatatableResponse<T>>(this.apiUrl
-      + `/paginate?page=${pagination.page}&size=${pagination.pageSize}&searchTerm=${pagination.searchTerm}&sortDirection=${pagination.sortDirection}&sortField=${pagination.sortField}`,
-      {
-        headers: this.headers
-      })
+    const params: string[] = [];
+    if (pagination.page) params.push(`page=${pagination.page}`);
+    if (pagination.pageSize) params.push(`size=${pagination.pageSize}`);
+    if (pagination.searchTerm) params.push(`searchTerm=${pagination.searchTerm}`);
+    if (pagination.sortField) params.push(`sortField=${pagination.sortField}`);
+    if (pagination.sortDirection) {
+      params.push(`sortDirection=${pagination.sortDirection}`)
+    } else {
+      params.push(`sortDirection=asc`)
+    }
+
+    const queryString = params.length ? `?${params.join('&')}` : '';
+    return this.http.get<IDatatableResponse<T>>(this.apiUrl + `/get/paginate${queryString}`, {
+      headers: this.headers
+    });
   }
 
   public searchAll(pagination: IPagination): Observable<IDatatableResponse<T>> {
+    const params: string[] = [];
+    if (pagination.page) params.push(`page=${pagination.page}`);
+    if (pagination.pageSize) params.push(`size=${pagination.pageSize}`);
+    if (pagination.searchTerm) params.push(`searchTerm=${pagination.searchTerm}`);
+    if (pagination.sortField) params.push(`sortField=${pagination.sortField}`);
+    if (pagination.sortDirection) {
+      params.push(`sortDirection=${pagination.sortDirection}`)
+    } else {
+      params.push(`sortDirection=asc`)
+    }
+
+    const queryString = params.length ? `?${params.join('&')}` : '';
+
     return this.http.get<IDatatableResponse<T>>(this.apiUrl
-      + `/all/paginate?page=${pagination.page}&size=${pagination.pageSize}&searchTerm=${pagination.searchTerm}&sortDirection=${pagination.sortDirection}&sortField=${pagination.sortField}`,
+      + `/get/all/paginated${queryString}`,
       {
         headers: this.headers
       })

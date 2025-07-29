@@ -5,7 +5,8 @@
         "SIGN_OUT": "Sign out",
         "ACCOUNT_SETTINGS": "Account settings",
         "PRICING": "Pricing",
-        "MANAGE_PRICING": "Manage Pricing"
+        "MANAGE_PRICING": "Manage Pricing",
+        "MANAGE_USERS": "Manage Users"
     },
     "PRICING": {
         "TITLE": "Choose the perfect plan for your needs",
