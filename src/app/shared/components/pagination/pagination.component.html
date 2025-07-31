@@ -24,7 +24,7 @@
             </svg>
         </a>
         <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span
-                class="font-semibold text-gray-900 dark:text-white">{{currentPage}}-{{itemsPerPage}}</span> of <span
+                class="font-semibold text-gray-900 dark:text-white">{{currentPage}}-{{totalItems < itemsPerPage ? totalItems : itemsPerPage}}</span> of <span
                 class="font-semibold text-gray-900 dark:text-white">{{totalItems}}</span></span>
     </div>
     <div class="flex items-center space-x-3">

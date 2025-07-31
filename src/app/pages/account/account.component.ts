@@ -100,6 +100,8 @@ export class AccountComponent implements OnInit, OnDestroy {
           city: address.city,
           country: address.country,
           phoneNumber: address.phoneNumber,
+          position: user.position || '',
+          biography: user.biography || '',
         });
         this.languageForm.patchValue({
           language: user.language,
@@ -121,6 +123,8 @@ export class AccountComponent implements OnInit, OnDestroy {
       zipCode: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
       city: ['', [Validators.required]],
       country: ['', [Validators.required]],
+      position: [''],
+      biography: [''],
     });
   }
 
@@ -183,6 +187,8 @@ export class AccountComponent implements OnInit, OnDestroy {
           phoneNumber: this.userProfileForm.value.phoneNumber,
         },
       ],
+      position: this.userProfileForm.value.position,
+      biography: this.userProfileForm.value.biography,
     };
     if (this.userId) {
       this.store.dispatch(updateUser({ userId: this.userId, user: updatedUser }));

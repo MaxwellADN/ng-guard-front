@@ -1,0 +1,6 @@
+.disabled-btn {
+    background-color: #e0e0e0 !important; /* Example: light gray */
+    color: #a0a0a0 !important;           /* Example: muted text */
+    cursor: not-allowed !important;
+    /* Remove pointer cursor */
+}

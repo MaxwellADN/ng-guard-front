@@ -1,4 +1,7 @@
-<button [disabled]="loading || disabled" [type]="type" [ngClass]="buttonClass + ' ' + sizeClass">
+<button
+    [disabled]="loading || disabled"
+    [type]="type"
+    [ngClass]="buttonClass + ' ' + sizeClass + (disabled || loading ? ' disabled-btn' : '')">
     @if (loading) {
     <svg aria-hidden="true" role="status" [ngClass]="spinnerClass + ' ' + spinnerSize"
         class="inline animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
