@@ -9,9 +9,6 @@
                 <div class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1">
                     <ul class="flex flex-col mt-4 space-x-6 text-sm font-medium lg:flex-row xl:space-x-8 lg:mt-0">
                         <li>
-                            <a routerLink="/app/home" class="block text-gray-700 hover:text-primary-700 dark:text-gray-400 dark:hover:text-white">{{ 'NAVBAR.HOME' | translate }}</a>
-                        </li>
-                        <li>
                             <a routerLink="/app/pricing" class="block text-gray-700 hover:text-primary-700 dark:text-gray-400 dark:hover:text-white">{{ 'NAVBAR.PRICING' | translate }}</a>
                         </li>
                         <li>
@@ -22,7 +19,7 @@
             </div>
             <div class="flex justify-between items-center lg:order-2">
                 <button type="button" (click)="toggleTheme()" class="p-2 text-gray-500 rounded-lg hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
-                    <span class="sr-only">Toggle dark mode</span>
+                    <span class="sr-only">{{ 'NAVBAR.TOGGLE_DARK_MODE' | translate }}</span>
                     @if(isDarkMode){
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                             <path fill-rule="evenodd" d="M13 3a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0V3ZM6.343 4.929A1 1 0 0 0 4.93 6.343l1.414 1.414a1 1 0 0 0 1.414-1.414L6.343 4.929Zm12.728 1.414a1 1 0 0 0-1.414-1.414l-1.414 1.414a1 1 0 0 0 1.414 1.414l1.414-1.414ZM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm-9 4a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2H3Zm16 0a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2h-2ZM7.757 17.657a1 1 0 1 0-1.414-1.414l-1.414 1.414a1 1 0 1 0 1.414 1.414l1.414-1.414Zm9.9-1.414a1 1 0 0 0-1.414 1.414l1.414 1.414a1 1 0 0 0 1.414-1.414l-1.414-1.414ZM13 19a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0v-2Z" clip-rule="evenodd"/>
@@ -35,7 +32,7 @@
                     }
                 </button>
                 <button type="button" class="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 flex-shrink-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 cursor-pointer" id="userMenuDropdownButton" aria-expanded="false" data-dropdown-toggle="userMenuDropdown">
-                    <span class="sr-only">Open user menu</span>
+                    <span class="sr-only">{{ 'NAVBAR.OPEN_USER_MENU' | translate }}</span>
                     <div class="w-9 h-9 rounded-full flex items-center justify-center text-white font-semibold bg-gray-900 border-2 border-gray-700" >
                         {{ userInitials }}
                     </div>
@@ -64,7 +61,7 @@
                 </div>
   
                 <button type="button" id="toggleMobileMenuButton" data-collapse-toggle="toggleMobileMenu" class="items-center p-2 text-gray-500 rounded-lg md:ml-2 lg:hidden hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600">
-                    <span class="sr-only">Open menu</span>
+                    <span class="sr-only">{{ 'NAVBAR.OPEN_MENU' | translate }}</span>
                     <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
                 </button>
             </div>

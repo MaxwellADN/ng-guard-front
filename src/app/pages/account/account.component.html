@@ -69,10 +69,11 @@
                                     getSubscriptionEndPeriodDate(subscription.createdAt) | date: 'MM/dd/yyyy' }}</span>
                             </div>
                             <div>
-                                <tb-confirmation-button buttonText="Cancel Subscription"
+                                <tb-confirmation-button buttonText="{{ 'ACCOUNT.CANCEL_SUBSCRIPTION' | translate }}"
                                     buttonColorClass="bg-red-500 hover:bg-red-600"
-                                    confirmText="Are you sure you want to cancel your subscription?"
-                                    confirmButtonText="Yes, cancel it" cancelButtonText="No, keep it"
+                                    confirmText="{{ 'ACCOUNT.CANCEL_SUBSCRIPTION_CONFIRM' | translate }}"
+                                    confirmButtonText="{{ 'ACCOUNT.CANCEL_SUBSCRIPTION_CONFIRM_YES' | translate }}" 
+                                    cancelButtonText="{{ 'ACCOUNT.CANCEL_SUBSCRIPTION_CONFIRM_NO' | translate }}"
                                     (onConfirm)="cancelSubscription()">
                                 </tb-confirmation-button>
                             </div>

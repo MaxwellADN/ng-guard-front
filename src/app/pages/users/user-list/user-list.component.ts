@@ -14,6 +14,7 @@ import { UserEditComponent } from '../user-edit/user-edit.component';
 import { ILink } from '../../../shared/models/link.interface';
 import { TranslateService } from '@ngx-translate/core';
 import { Role } from '../../../core/enums/role.enum';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user-list',
@@ -34,6 +35,7 @@ export class UserListComponent implements OnInit {
   private store = inject(Store);
   private actions$ = inject(Actions);
   private translate = inject(TranslateService);
+  private snackBar = inject(MatSnackBar);
   public users$ = this.store.select(selectUsers);
   public totalUsers$ = this.store.select(selectUsersTotal);
   public userId: string | null = null;
@@ -53,14 +55,26 @@ export class UserListComponent implements OnInit {
         case createUserSuccess.type:
           this.showEditDiaog = false;
           this.searchUsers();
+          this.snackBar.open(this.translate.instant('USER.ADD.SUCCESS'), 'Close', {
+            duration: 3000,
+            panelClass: ['snackbar-success'],
+          });
           break;
         case deleteUserSuccess.type:
           this.showEditDiaog = false;
           this.searchUsers();
+          this.snackBar.open(this.translate.instant('USER.DELETE.SUCCESS'), 'Close', {
+            duration: 3000,
+            panelClass: ['snackbar-success'],
+          });
           break;
         case updateUserSuccess.type:
           this.showEditDiaog = false;
           this.searchUsers();
+          this.snackBar.open(this.translate.instant('USER.EDIT.SUCCESS'), 'Close', {
+            duration: 3000,
+            panelClass: ['snackbar-success'],
+          });
           break;
       }
     });

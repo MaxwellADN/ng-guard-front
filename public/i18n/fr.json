@@ -12,7 +12,8 @@
         "SIGN_OUT": "Se déconnecter",
         "ACCOUNT_SETTINGS": "Paramètres du compte",
         "PRICING": "Tarification",
-        "MANAGE_PRICING": "Gérer la tarification"
+        "MANAGE_PRICING": "Gérer la tarification",
+        "MANAGE_USERS": "Gérer les utilisateurs"
     },
     "PRICING": {
         "TITLE": "Notre plan tarifaire simplifié",
@@ -108,5 +109,86 @@
         "CANCEL_SUBSCRIPTION_SUCCESS": "L'abonnement a été annulé avec succès.",
         "USER_SUCCESSFULLY_UPDATED": "Informations utilisateur mises à jour avec succès.",
         "INVALID_EMAIL": "Adresse email invalide."
+    },
+    "AUTH": {
+        "LOGIN": {
+            "TITLE": "Connectez-vous à votre compte",
+            "EMAIL": "Email",
+            "EMAIL_REQUIRED": "L'email est requis",
+            "PASSWORD": "Mot de passe",
+            "PASSWORD_REQUIRED": "Le mot de passe est requis",
+            "REMEMBER_ME": "Se souvenir de moi",
+            "FORGOT_PASSWORD": "Mot de passe oublié ?",
+            "LOGIN_BUTTON": "Connexion",
+            "NO_ACCOUNT": "Vous n'avez pas de compte ?",
+            "SIGN_UP": "S'inscrire",
+            "LOGIN_ERROR": "Email ou mot de passe invalide."
+        },
+        "SIGNUP": {
+            "TITLE": "Créer un compte gratuit",
+            "FULLNAME": "Votre nom complet",
+            "FULLNAME_REQUIRED": "Le nom complet est requis",
+            "EMAIL": "Votre Email",
+            "EMAIL_REQUIRED": "L'email est requis",
+            "PASSWORD": "Votre mot de passe",
+            "PASSWORD_REQUIRED": "Le mot de passe est requis",
+            "CONFIRM_PASSWORD": "Confirmer le mot de passe",
+            "CONFIRM_PASSWORD_REQUIRED": "La confirmation du mot de passe est requise",
+            "SIGNUP_BUTTON": "S'inscrire",
+            "ALREADY_HAVE_ACCOUNT": "Vous avez déjà un compte ?",
+            "LOGIN": "Connectez-vous ici",
+            "AGREE_TERMS": "J'accepte les",
+            "TERMS_CONDITIONS": "Conditions générales",
+            "APPLE_SIGNUP": "S'inscrire avec Apple",
+            "CONFLIT": "Un compte a déjà été créé avec cette adresse email.",
+            "ERROR_SIGNUP": "Une erreur s'est produite lors de la création de votre compte. Veuillez réessayer.",
+            "TERMS_AGREEMENT": "Vous devez accepter les conditions générales pour créer un compte.",
+            "PASSWORD_MESSAGE": "Le mot de passe doit comporter au moins 6 caractères et contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial.",
+            "PASSWORD_NUMBER": "Le mot de passe doit contenir au moins un chiffre.",
+            "PASSWORD_UPPERCASE": "Le mot de passe doit contenir au moins une lettre majuscule.",
+            "PASSWORD_SPECIAL": "Le mot de passe doit contenir au moins un caractère spécial."
+        },
+        "FORGOT_PASSWORD": {
+            "TITLE": "Réinitialisez votre mot de passe",
+            "EMAIL": "Entrez votre adresse email",
+            "EMAIL_REQUIRED": "L'email est requis",
+            "SUBMIT_BUTTON": "Envoyer",
+            "BACK_TO_LOGIN": "Retour à la connexion",
+            "ENTER_EMAIL": "Entrez votre adresse email pour recevoir un lien de réinitialisation du mot de passe."
+        },
+        "RESET_PASSWORD": {
+            "TITLE": "Définir un nouveau mot de passe",
+            "NEW_PASSWORD": "Nouveau mot de passe",
+            "NEW_PASSWORD_REQUIRED": "Le nouveau mot de passe est requis",
+            "CONFIRM_PASSWORD": "Confirmer le nouveau mot de passe",
+            "CONFIRM_PASSWORD_REQUIRED": "La confirmation du nouveau mot de passe est requise",
+            "RESET_BUTTON": "Réinitialiser le mot de passe",
+            "EMAIL_SENT": "Un lien de réinitialisation du mot de passe a été envoyé à votre adresse email.",
+            "EMAIL_SENT_ERROR": "Une erreur s'est produite lors de l'envoi du lien de réinitialisation. Veuillez réessayer."
+        },
+        "UNAUTHORIZED": {
+            "TITLE": "Non autorisé",
+            "DESCRIPTION": "Désolé, vous n'êtes pas autorisé à accéder à cette page.",
+            "GO_TO_LOGIN": "Aller à la connexion"
+        },
+        "EMAIL_VERIFICATION": {
+            "VERIFICATION_PROGRESS": "Vérification en cours"
+        },
+        "PROFILE_LOCK": {
+            "TITLE": "Veuillez activer votre compte...",
+            "MESSAGE": "Merci pour votre inscription ! Veuillez vérifier votre boîte de réception et cliquer sur le lien d'activation pour activer votre compte. Une fois votre compte activé, vous pourrez accéder à votre espace personnel.",
+            "LOGOUT_BUTTON": "Déconnexion"
+        }
+    },
+    "NOT_FOUND": {
+        "TITLE": "Page non trouvée",
+        "DESCRIPTION": "La page que vous recherchez a peut-être été supprimée, renommée ou est temporairement indisponible.",
+        "GO_BACK_HOME": "Retour à l'accueil"
+    },
+    "SUBSCRIPTION_SUCCESS": {
+        "TITLE": "Abonnement réussi !",
+        "MESSAGE": "Merci pour votre abonnement ! Vous recevrez désormais des mises à jour et du contenu exclusif directement dans votre boîte de réception.",
+        "NOTE": "L'abonnement peut prendre quelques secondes pour prendre effet. Veuillez recharger votre page pour vérifier que l'abonnement a bien été appliqué.",
+        "GO_TO_HOMEPAGE": "Aller à la page d'accueil"
     }
 }
